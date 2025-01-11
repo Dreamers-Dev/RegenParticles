@@ -20,6 +20,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("com.github.fierioziy.particlenativeapi:ParticleNativeAPI-core:4.4.0")
 }
 
@@ -31,6 +32,11 @@ kotlin {
 tasks {
     build {
         dependsOn("shadowJar")
+    }
+
+    shadowJar {
+        relocate("org.bstats", "dev.dreamers.regenparticles.libs.bstats")
+        relocate("com.github.fierioziy.particlenativeapi", "dev.dreamers.regenparticles.libs.particlenativeapi")
     }
 
     processResources {

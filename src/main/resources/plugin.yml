@@ -1,4 +1,4 @@
 name: RegenParticles
 version: '1.0.0'
-main: dev.dreamers.regenParticles.RegenParticles
+main: dev.dreamers.regenparticles.RegenParticles
 api-version: '1.18'

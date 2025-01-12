@@ -1,4 +1,9 @@
 name: RegenParticles
 version: '1.0.0'
 main: dev.dreamers.regenparticles.RegenParticles
-api-version: '1.18'
+api-version: '1.13'
+
+permissions:
+  regenparticles.visualize:
+    default: true
+    description: Spawns particles around players when healing

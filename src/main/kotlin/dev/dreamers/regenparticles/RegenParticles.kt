@@ -5,7 +5,6 @@ import com.github.fierioziy.particlenativeapi.api.particle.type.ParticleType
 import com.github.fierioziy.particlenativeapi.core.ParticleNativeCore
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
-import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -32,21 +31,19 @@ class RegenParticles : JavaPlugin(), Listener {
 
     @EventHandler
     private fun onRegen(event: EntityRegainHealthEvent) {
-        if (event.entity !is Player) return
-        val player = event.entity as Player
+        val player = event.entity as? Player ?: return
+        if (!player.hasPermission("regenparticles.visualize")) return
         val location = player.location
 
-        val random = Random
         repeat(8) {
-            val xOffset = random.nextDouble(-0.5, 0.5)
-            val yOffset = random.nextDouble(0.0, 2.0)
-            val zOffset = random.nextDouble(-0.5, 0.5)
-
-            val particleLocation = location.clone().add(xOffset, yOffset, zOffset)
-
-            particle
-                .packet(true, particleLocation)
-                .sendTo(Bukkit.getServer().onlinePlayers)
+            val particleLocation = location.clone().apply {
+                add(
+                    Random.nextDouble(-0.5, 0.5),
+                    Random.nextDouble(0.0, 2.0),
+                    Random.nextDouble(-0.5, 0.5)
+                )
+            }
+            particle.packet(true, particleLocation).sendTo(Bukkit.getOnlinePlayers())
         }
     }
 }
